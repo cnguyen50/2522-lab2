@@ -102,4 +102,34 @@ public class Creature {
             health = MAX_HEALTH;
         }
     }
+
+    /**
+     * Calculates the age of this creature's age in years based on its date of birth.
+     *
+     * @return the age of the creature in years
+     */
+    public int getAgeYears() {
+    //not sure how jason wants us to get date w/ or w/o Date from util or we could use Date class from lab1
+
+    }
+
+    /**
+     * Provides a formatted string containing the creature's details.
+     *
+     * @return a string with name, date of birth, age and health
+     */
+    public String getDetails() {
+        final StringBuilder builder;
+        builder = new StringBuilder();
+
+        builder.append("Name: ")
+                .append(name)
+                .append(", Date of Birth: ")
+                .append(dateOfBirth)
+                .append(getAgeYears())
+                .append(" years old, Health: ")
+                .append(health);
+
+        return builder.toString();
+    }
 }
