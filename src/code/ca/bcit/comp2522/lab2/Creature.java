@@ -16,7 +16,10 @@ public class Creature {
     private static int MIN_HEALTH = 1;
 
     /** Represents the health value of a dead creature. */
-    private static int NO_HEALTH = 0;
+    private static int DEAD_HEALTH = 0;
+
+    /** Minimum valid damage amount. */
+    private static final int MIN_DAMAGE = 0;
 
     /** The name of the creature. */
     private final String name;
@@ -30,27 +33,73 @@ public class Creature {
     /**
      * Constructs a Creature with the specified attributes.
      *
-     * @param name          the creature's name
-     * @param dateOfBirth   the creature's date of birth
-     * @param health        the creature's health
+     * @param name                      the creature's name
+     * @param dateOfBirth               the creature's date of birth
+     * @param health                    the creature's health
      * @throws IllegalArgumentException if name is invalid, date is null or future,
      *                                  or health is outside valid range
      */
-    public Creature(final String name, final Date dateOfBirth, final int health) {
+    public Creature(final String name,
+                    final Date dateOfBirth,
+                    final int health) {
+
         //validate name,dob,health
 
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.health = health;
+        this.name           = name;
+        this.dateOfBirth    = dateOfBirth;
+        this.health         = health;
     }
 
     /**
-     * Validates if the creature is alive
+     * Validates if the creature is alive.
      *
      * @return true if health is greater than zero, false otherwise
      */
     public boolean isAlive() {
-        return health > NO_HEALTH;
+        return health > DEAD_HEALTH;
     }
 
+    /**
+     * Reduces this creature's health by the damage amount.
+     *
+     * @param damage            the amount of damage to apply
+     * @throws DamageException  if the damage is negative
+     */
+    public void takeDamage(final int damage) {
+
+        //If damage is negative, throw unchecked DamageException
+        if (damage < MIN_DAMAGE) {
+            throw new DamageException("Damage amount can't be negative");
+        }
+
+        //Reduces health by damage
+        health -= damage;
+
+        //If health goes below zero, set it to zero
+        if (health < DEAD_HEALTH) {
+            health = DEAD_HEALTH;
+        }
+    }
+
+    /**
+     * Increases this creature's health by the healing amount.
+     *
+     * @param healAmount            the amount of healing to apply
+     * @throws HealingException     if the healAmount is negative
+     */
+    public void heal(final int healAmount) {
+
+        //If healing amount is negative, throw unchecked HealingException
+        if (healAmount < MIN_HEALTH) {
+            throw new HealingException("Heal amount can't be negative");
+        }
+
+        //Increases health by heal amount
+        health += healAmount;
+
+        //Since heal amount cannot exceed maximum health, set it to maximum health
+        if (health > MAX_HEALTH) {
+            health = MAX_HEALTH;
+        }
+    }
 }
