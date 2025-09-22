@@ -26,4 +26,31 @@ public class Creature {
 
     /** The current health of a creature. */
     private int health;
+
+    /**
+     * Constructs a Creature with the specified attributes.
+     *
+     * @param name          the creature's name
+     * @param dateOfBirth   the creature's date of birth
+     * @param health        the creature's health
+     * @throws IllegalArgumentException if name is invalid, date is null or future,
+     *                                  or health is outside valid range
+     */
+    public Creature(final String name, final Date dateOfBirth, final int health) {
+        //validate name,dob,health
+
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.health = health;
+    }
+
+    /**
+     * Validates if the creature is alive
+     *
+     * @return true if health is greater than zero, false otherwise
+     */
+    public boolean isAlive() {
+        return health > NO_HEALTH;
+    }
+
 }
